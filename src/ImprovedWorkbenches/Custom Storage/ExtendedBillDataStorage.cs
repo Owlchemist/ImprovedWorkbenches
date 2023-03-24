@@ -76,7 +76,7 @@ namespace ImprovedWorkbenches
                 }
 
                 _store[bill] = _legacyStore[billId];
-                Log.Message($"[Better Workbench Management] Migradted bill id: {billId}");
+                Log.Message($"[Better Workbench Management] Migrated bill id: {billId}");
             }
 
             _legacyStore.Clear();
@@ -201,6 +201,18 @@ namespace ImprovedWorkbenches
             destinationBill.SetStoreMode(sourceBill.GetStoreMode(), sourceBill.GetStoreZone());
             destinationBill.paused = sourceBill.paused;
             destinationBill.SetPawnRestriction(sourceBill.PawnRestriction);
+            if (sourceBill.SlavesOnly)
+            {
+                destinationBill.SetAnySlaveRestriction();
+            }
+            if (sourceBill.MechsOnly)
+            {
+                destinationBill.SetAnyMechRestriction();
+            }
+            if (sourceBill.NonMechsOnly)
+            {
+                destinationBill.SetAnyNonMechRestriction();
+            }
 
             if (Main.Instance.ShouldMirrorSuspendedStatus())
             {
